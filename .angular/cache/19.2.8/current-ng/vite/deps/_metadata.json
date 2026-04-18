@@ -1,0 +1,115 @@
+{
+  "hash": "93a735a0",
+  "configHash": "5731393a",
+  "lockfileHash": "4654e00f",
+  "browserHash": "3550bd57",
+  "optimized": {
+    "@angular/common": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "23b16afe",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "26bd68e6",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "0039b661",
+      "needsInterop": false
+    },
+    "@angular/platform-browser/animations": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/animations.mjs",
+      "file": "@angular_platform-browser_animations.js",
+      "fileHash": "6b55c6a8",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "9aa52af0",
+      "needsInterop": false
+    },
+    "@ng-bootstrap/ng-bootstrap": {
+      "src": "../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/fesm2022/ng-bootstrap.mjs",
+      "file": "@ng-bootstrap_ng-bootstrap.js",
+      "fileHash": "aa40ee6d",
+      "needsInterop": false
+    },
+    "aos": {
+      "src": "../../../../../../node_modules/aos/dist/aos.js",
+      "file": "aos.js",
+      "fileHash": "a6b0d48b",
+      "needsInterop": true
+    },
+    "ngx-countup": {
+      "src": "../../../../../../node_modules/ngx-countup/fesm2020/ngx-countup.mjs",
+      "file": "ngx-countup.js",
+      "fileHash": "79479113",
+      "needsInterop": false
+    },
+    "ngx-owl-carousel-o": {
+      "src": "../../../../../../node_modules/ngx-owl-carousel-o/fesm2022/ngx-owl-carousel-o.mjs",
+      "file": "ngx-owl-carousel-o.js",
+      "fileHash": "7018fa70",
+      "needsInterop": false
+    },
+    "ngx-slick-carousel": {
+      "src": "../../../../../../node_modules/ngx-slick-carousel/fesm2022/ngx-slick-carousel.mjs",
+      "file": "ngx-slick-carousel.js",
+      "fileHash": "d1c73fe5",
+      "needsInterop": false
+    },
+    "rxjs": {
+      "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
+      "file": "rxjs.js",
+      "fileHash": "c9405cf1",
+      "needsInterop": false
+    },
+    "rxjs/operators": {
+      "src": "../../../../../../node_modules/rxjs/dist/esm5/operators/index.js",
+      "file": "rxjs_operators.js",
+      "fileHash": "9c5b0920",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-LDDY2U46": {
+      "file": "chunk-LDDY2U46.js"
+    },
+    "chunk-SMSTD3TL": {
+      "file": "chunk-SMSTD3TL.js"
+    },
+    "chunk-V3DWIYC4": {
+      "file": "chunk-V3DWIYC4.js"
+    },
+    "chunk-KDWUNZ6H": {
+      "file": "chunk-KDWUNZ6H.js"
+    },
+    "chunk-YFV4AR6U": {
+      "file": "chunk-YFV4AR6U.js"
+    },
+    "chunk-UEORWG4C": {
+      "file": "chunk-UEORWG4C.js"
+    },
+    "chunk-Q33G44XD": {
+      "file": "chunk-Q33G44XD.js"
+    },
+    "chunk-PEBH6BBU": {
+      "file": "chunk-PEBH6BBU.js"
+    },
+    "chunk-WPM5VTLQ": {
+      "file": "chunk-WPM5VTLQ.js"
+    },
+    "chunk-4S3KYZTJ": {
+      "file": "chunk-4S3KYZTJ.js"
+    },
+    "chunk-3OV72XIM": {
+      "file": "chunk-3OV72XIM.js"
+    }
+  }
+}
