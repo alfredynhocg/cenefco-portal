@@ -1,0 +1,277 @@
+<div class="modal-header border-bottom pb-3">
+    <h5 class="modal-title fw-bold">Pre-inscripción</h5>
+    <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body px-4 py-3">
+
+    <!-- ÉXITO -->
+    @if (exito) {
+        <div class="text-center py-4 px-2">
+            <i class="fa-solid fa-graduation-cap fa-3x text-success mb-3 d-block"></i>
+            <h5 class="fw-bold mb-3">¡Pre-inscripción enviada!</h5>
+            <p class="mb-2">
+                🎓 Gracias por confiar en la <strong>Universidad San Francisco de Asís (USFA)</strong> y <strong>CENEFCO</strong>.
+                Valoramos su preferencia y la confianza depositada en nuestros programas.
+            </p>
+            <p class="text-muted">
+                📲 Ante cualquier duda o consulta, estaremos encantados de atenderle.
+            </p>
+            <button class="header-btn1 mt-3" (click)="activeModal.close()">Cerrar</button>
+        </div>
+    }
+
+    @if (!exito) {
+        <!-- Indicador de pasos -->
+        <div class="d-flex align-items-center mb-4">
+            <span class="badge rounded-pill px-3 py-2 me-2"
+                [style.background]="paso === 1 ? '#c0392b' : '#6c757d'">1</span>
+            <span class="text-muted small me-2">Datos personales</span>
+            <div class="flex-grow-1 border-top mx-2"></div>
+            <span class="badge rounded-pill px-3 py-2 me-2"
+                [style.background]="paso === 2 ? '#c0392b' : '#6c757d'">2</span>
+            <span class="text-muted small">Documentos y pago</span>
+        </div>
+
+        <p class="text-muted mb-3">Programa: <strong>{{ programaNombre }}</strong></p>
+
+        @if (error) {
+            <div class="alert alert-danger py-2">{{ error }}</div>
+        }
+
+        <!-- PASO 1 -->
+        @if (paso === 1) {
+        <form #f1="ngForm">
+            <div class="row g-3">
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Correo electrónico <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" placeholder="correo@ejemplo.com"
+                        name="email" [(ngModel)]="form.email" required>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Nombre(s) <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Tus nombres"
+                        name="nombre" [(ngModel)]="form.nombre" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Apellido Paterno</label>
+                    <input type="text" class="form-control" placeholder="Apellido paterno"
+                        name="apellido_paterno" [(ngModel)]="form.apellido_paterno">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Apellido Materno</label>
+                    <input type="text" class="form-control" placeholder="Apellido materno"
+                        name="apellido_materno" [(ngModel)]="form.apellido_materno">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Fecha de nacimiento <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control"
+                        name="fecha_nacimiento" [(ngModel)]="form.fecha_nacimiento" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Carnet de Identidad <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Ej: 1234567"
+                        name="ci" [(ngModel)]="form.ci" required>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Extensión (departamento del CI)</label>
+                    <div class="row g-2 mt-1">
+                        @for (exp of expedidos; track exp.id) {
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                        [id]="'exp_' + exp.id"
+                                        name="expedido_id"
+                                        [value]="exp.id"
+                                        [(ngModel)]="form.expedido_id">
+                                    <label class="form-check-label" [for]="'exp_' + exp.id">
+                                        {{ exp.nombre }}
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">
+                        Teléfono Celular registrado en grupo de INSCRITOS <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Ej: 70000000"
+                        name="telefono" [(ngModel)]="form.telefono" required>
+                </div>
+
+                <div class="col-12 mt-2">
+                    <button type="button" class="header-btn1 w-100 justify-content-center"
+                        [disabled]="f1.invalid" (click)="siguientePaso()">
+                        Siguiente <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+        }
+
+        <!-- PASO 2 -->
+        @if (paso === 2) {
+        <form #f2="ngForm">
+            <div class="row g-3">
+
+                <!-- Archivos -->
+                <div class="col-12">
+                    <label class="form-label fw-semibold">
+                        Carnet de Identidad – Adjuntar fotografía o documento escaneado <span class="text-danger">*</span>
+                    </label>
+                    <p class="text-muted small mb-1">Requisito para la emisión del diploma avalado por la USFA. Máx. 10 MB.</p>
+                    <input type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png"
+                        (change)="subirArchivo($event, 'ci_anverso')">
+                    @if (subiendo['ci_anverso']) {
+                        <small class="text-muted"><span class="spinner-border spinner-border-sm me-1"></span>Subiendo...</small>
+                    }
+                    @if (archivos.ci_anverso) {
+                        <small class="text-success"><i class="fa-solid fa-check me-1"></i>Archivo subido</small>
+                    }
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">
+                        Título – Licenciatura en Provisión Nacional <span class="text-danger">*</span>
+                    </label>
+                    <p class="text-muted small mb-1">Requisito para la emisión del diploma académico USFA. Máx. 10 MB.</p>
+                    <input type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png"
+                        (change)="subirArchivo($event, 'titulo')">
+                    @if (subiendo['titulo']) {
+                        <small class="text-muted"><span class="spinner-border spinner-border-sm me-1"></span>Subiendo...</small>
+                    }
+                    @if (archivos.titulo) {
+                        <small class="text-success"><i class="fa-solid fa-check me-1"></i>Archivo subido</small>
+                    }
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">
+                        Currículum Vitae (CV) <span class="text-danger">*</span>
+                    </label>
+                    <p class="text-muted small mb-1">Requisito para el registro académico del diplomado. Máx. 10 MB.</p>
+                    <input type="file" class="form-control" accept=".pdf,.doc,.docx"
+                        (change)="subirArchivo($event, 'cv')">
+                    @if (subiendo['cv']) {
+                        <small class="text-muted"><span class="spinner-border spinner-border-sm me-1"></span>Subiendo...</small>
+                    }
+                    @if (archivos.cv) {
+                        <small class="text-success"><i class="fa-solid fa-check me-1"></i>Archivo subido</small>
+                    }
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Fotografías 3×3 fondo azul mate</label>
+                    <p class="text-muted small mb-1">Fotografía digital tomada en estudio (no foto de la foto). Máx. 10 MB.</p>
+                    <input type="file" class="form-control" accept=".jpg,.jpeg,.png"
+                        (change)="subirArchivo($event, 'foto_3x3')">
+                    @if (subiendo['foto_3x3']) {
+                        <small class="text-muted"><span class="spinner-border spinner-border-sm me-1"></span>Subiendo...</small>
+                    }
+                    @if (archivos.foto_3x3) {
+                        <small class="text-success"><i class="fa-solid fa-check me-1"></i>Archivo subido</small>
+                    }
+                </div>
+
+                <!-- Ciudad de residencia -->
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Ciudad de Residencia (para entrega del certificado físico)</label>
+                    <div class="row g-2 mt-1">
+                        @for (c of ciudades; track c) {
+                            <div class="col-6 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                        [id]="'ciudad_' + c"
+                                        name="ciudad"
+                                        [value]="c"
+                                        [(ngModel)]="form.ciudad">
+                                    <label class="form-check-label" [for]="'ciudad_' + c">{{ c }}</label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Si se encuentra en una provincia, especifíquela</label>
+                    <input type="text" class="form-control" placeholder="Ej: Quillacollo"
+                        name="provincia" [(ngModel)]="form.provincia">
+                </div>
+
+                <!-- Medio de pago -->
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Medio por el cuál realizó su pago</label>
+                    <div class="row g-2 mt-1">
+                        @for (mp of mediosPago; track mp) {
+                            <div class="col-12 col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                        [id]="'pago_' + mp"
+                                        name="medio_pago"
+                                        [value]="mp"
+                                        [(ngModel)]="form.medio_pago">
+                                    <label class="form-check-label" [for]="'pago_' + mp">{{ mp }}</label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Monto pagado (Bs.)</label>
+                    <input type="number" class="form-control" placeholder="Ej: 500"
+                        name="monto_pagado" [(ngModel)]="form.monto_pagado">
+                </div>
+
+                <!-- Sugerencias -->
+                <div class="col-12">
+                    <label class="form-label fw-semibold">¿Podría sugerirnos algún curso de su interés?</label>
+                    <input type="text" class="form-control" placeholder="Tu respuesta"
+                        name="sugerencia_curso" [(ngModel)]="form.sugerencia_curso">
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">
+                        ¿Gustaría recomendarnos algún docente experto? (SI/NO)
+                    </label>
+                    <p class="text-muted small mb-1">Si su respuesta es SÍ, indique nombre, especialidad y contacto.</p>
+                    <textarea class="form-control" rows="2" placeholder="Tu respuesta"
+                        name="detalle_docente" [(ngModel)]="form.detalle_docente"></textarea>
+                </div>
+
+                <!-- Botones -->
+                <div class="col-12 d-flex gap-2 mt-2">
+                    <button type="button" class="btn btn-outline-secondary flex-shrink-0"
+                        (click)="anteriorPaso()">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Anterior
+                    </button>
+                    <button type="button" class="header-btn1 flex-grow-1 justify-content-center"
+                        [disabled]="enviando" (click)="enviar()">
+                        @if (enviando) {
+                            <span class="spinner-border spinner-border-sm me-2"></span> Enviando...
+                        } @else {
+                            Enviar Pre-inscripción <i class="fa-solid fa-arrow-right ms-2"></i>
+                        }
+                    </button>
+                </div>
+
+            </div>
+        </form>
+        }
+    }
+
+</div>
+
+<div class="modal-footer justify-content-center border-top pt-2">
+    <small class="text-muted">Página {{ paso }} de 2</small>
+</div>

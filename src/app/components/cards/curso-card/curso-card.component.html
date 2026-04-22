@@ -1,0 +1,17 @@
+<div class="service-auhtor-boxarea">
+    <div class="img1">
+        <img [src]="imagen" [alt]="curso.imagen_alt || curso.nombre_programa">
+        @if (curso.tipo_nombre) {
+            <span class="curso-badge">{{ curso.tipo_nombre }}</span>
+        }
+    </div>
+    <div class="content-area">
+        <h3>{{ numero }}</h3>
+        <a [routerLink]="['/cursos', curso.id_programa]">{{ curso.nombre_programa }}</a>
+        <p>{{ curso.descripcion }}</p>
+        @if (curso.inversion) {
+            <p class="curso-inversion"><strong>Inversión:</strong> {{ curso.inversion }}</p>
+        }
+        <a [routerLink]="['/cursos', curso.id_programa]" class="readmore">Ver detalle <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="d-flex min-vh-100">
+    <!-- Sidebar -->
+    <nav class="d-flex flex-column p-3 text-white" style="width:230px; background:#1a1a2e; flex-shrink:0;">
+        <div class="mb-4 mt-1">
+            <span class="fw-bold fs-5" style="color:#e74c3c;">CENEFCO</span>
+            <span class="text-white-50 small ms-1">Admin</span>
+        </div>
+        <ul class="nav flex-column gap-1 flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-white-75 px-2 py-2 rounded"
+                   routerLink="/admin/certificados" routerLinkActive="active-link">
+                    <i class="fa-solid fa-certificate me-2"></i> Certificados
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white-75 px-2 py-2 rounded"
+                   routerLink="/admin/plantillas" routerLinkActive="active-link">
+                    <i class="fa-solid fa-image me-2"></i> Plantillas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white-75 px-2 py-2 rounded"
+                   routerLink="/admin/lista-aprobados" routerLinkActive="active-link">
+                    <i class="fa-solid fa-users me-2"></i> Lista de Aprobados
+                </a>
+            </li>
+        </ul>
+        <button class="btn btn-outline-light btn-sm mt-auto" (click)="logout()">
+            <i class="fa-solid fa-right-from-bracket me-1"></i> Cerrar sesión
+        </button>
+    </nav>
+
+    <!-- Content -->
+    <main class="flex-grow-1 bg-light overflow-auto">
+        <router-outlet></router-outlet>
+    </main>
+</div>
+
+<style>
+.active-link { background: rgba(255,255,255,.12) !important; font-weight: 600; }
+.nav-link:hover { background: rgba(255,255,255,.07); }
+</style>

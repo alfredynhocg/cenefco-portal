@@ -1,0 +1,157 @@
+<div class="p-4">
+    <h4 class="fw-bold mb-4">Generación de Certificados</h4>
+
+    @if (error) { <div class="alert alert-danger py-2">{{ error }}</div> }
+    @if (success) { <div class="alert alert-success py-2">{{ success }}</div> }
+
+    <!-- GENERACIÓN MASIVA -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header fw-semibold">
+            <i class="fa-solid fa-bolt me-2 text-warning"></i>Generar certificados masivos
+        </div>
+        <div class="card-body">
+            <p class="text-muted small mb-3">
+                Genera certificados para todos los estudiantes en <strong>estado_certificado = pendiente</strong> de una apertura de curso.
+            </p>
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">ID Apertura (imparte_id) <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" [(ngModel)]="generarImparteId" placeholder="Ej: 123">
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label fw-semibold">Plantilla de certificado <span class="text-danger">*</span></label>
+                    <select class="form-select" [(ngModel)]="generarPlantillaId">
+                        <option [ngValue]="null">-- Seleccionar plantilla --</option>
+                        @for (p of plantillas; track p.id) {
+                            <option [ngValue]="p.id">{{ p.nombre }} ({{ p.tipo }})</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-danger w-100 fw-semibold" (click)="generarLote()" [disabled]="generando">
+                        @if (generando) {
+                            <span class="spinner-border spinner-border-sm me-2"></span> Generando...
+                        } @else {
+                            <i class="fa-solid fa-certificate me-2"></i> Generar Certificados
+                        }
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resultado -->
+            @if (resultadoLote) {
+            <div class="mt-4 p-3 rounded border bg-white">
+                <p class="fw-semibold mb-2">Resultado:</p>
+                <div class="d-flex gap-4 mb-2">
+                    <div>
+                        <div class="fw-bold text-success fs-4">{{ resultadoLote.generados }}</div>
+                        <small class="text-muted">Generados</small>
+                    </div>
+                    <div>
+                        <div class="fw-bold text-muted fs-4">{{ resultadoLote.total_aprobados }}</div>
+                        <small class="text-muted">Total aprobados</small>
+                    </div>
+                    @if (resultadoLote.errores?.length) {
+                    <div>
+                        <div class="fw-bold text-danger fs-4">{{ resultadoLote.errores.length }}</div>
+                        <small class="text-muted">Errores</small>
+                    </div>
+                    }
+                </div>
+                @if (resultadoLote.errores?.length) {
+                    <details>
+                        <summary class="text-danger small fw-semibold" style="cursor:pointer;">Ver errores</summary>
+                        <ul class="mt-2 small">
+                            @for (e of resultadoLote.errores; track e.usuario_id) {
+                                <li>Usuario {{ e.usuario_id }} ({{ e.nombre }}): {{ e.error }}</li>
+                            }
+                        </ul>
+                    </details>
+                }
+            </div>
+            }
+        </div>
+    </div>
+
+    <!-- FILTROS + LISTA -->
+    <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body py-2">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold small mb-1">Filtrar por imparte_id</label>
+                    <input type="number" class="form-control form-control-sm" [(ngModel)]="filtros.imparte_id" placeholder="Ej: 123">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-sm btn-outline-dark" (click)="buscar()">
+                        <i class="fa-solid fa-magnifying-glass me-1"></i> Filtrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (loading) {
+        <div class="text-center py-5"><span class="spinner-border text-danger"></span></div>
+    } @else {
+    <div class="card border-0 shadow-sm">
+        <div class="card-header text-muted small">{{ total }} certificados en total</div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Código</th>
+                            <th>Estudiante</th>
+                            <th>Programa</th>
+                            <th>Condición</th>
+                            <th>Estado</th>
+                            <th>Archivo</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (cert of certificados; track cert.id) {
+                        <tr>
+                            <td><code class="small">{{ cert.codigo_verificacion }}</code></td>
+                            <td class="fw-semibold">{{ cert.nombre_en_certificado }}</td>
+                            <td class="small text-muted">{{ cert.programa_en_certificado }}</td>
+                            <td>
+                                <span class="badge"
+                                    [class.bg-success]="cert.condicion==='aprobado'"
+                                    [class.bg-info]="cert.condicion!=='aprobado'">
+                                    {{ cert.condicion }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge"
+                                    [class.bg-success]="cert.estado==='generado'"
+                                    [class.bg-danger]="cert.estado==='anulado'"
+                                    [class.bg-secondary]="cert.estado!=='generado' && cert.estado!=='anulado'">
+                                    {{ cert.estado }}
+                                </span>
+                            </td>
+                            <td>
+                                @if (cert.archivo_url) {
+                                    <a [href]="storageBase + cert.archivo_url" target="_blank" class="btn btn-sm btn-outline-success">
+                                        <i class="fa-solid fa-download me-1"></i>JPG
+                                    </a>
+                                }
+                            </td>
+                            <td class="text-muted small">{{ cert.created_at | date:'dd/MM/yyyy' }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-danger" (click)="eliminar(cert)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        } @empty {
+                        <tr><td colspan="8" class="text-center text-muted py-4">No hay certificados generados aún.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    }
+</div>

@@ -6,7 +6,12 @@ export const VIEWS_ROUTES: Routes = [
         path: 'home-1',
         component: Home1Component,
         data: { title: "home-1" }
-       
+
+    },
+    {
+        path: '',
+        loadChildren: () =>
+            import('./cursos/cursos.route').then((mod) => mod.CURSOS_ROUTES),
     },
     {
         path: '',

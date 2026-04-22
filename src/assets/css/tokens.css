@@ -13,11 +13,11 @@
    /* =============================================
      MARCA — Colores principales de la gestion
      ============================================= */
-   --color-brand-primary: #061039;
+   --color-brand-primary: #002647;
    /* azul muy oscuro — fondo principal, botones primarios */
-   --color-brand-primary-light: #1A2B66;
+   --color-brand-primary-light: #003d6e;
    /* azul medio — hover, variantes claras */
-   --color-brand-primary-dark: #02061F;
+   --color-brand-primary-dark: #001630;
    /* azul mas oscuro — estados activos */
 
    --color-brand-accent: #FFFFFF;

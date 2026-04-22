@@ -1,0 +1,142 @@
+<div class="p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold mb-0">Plantillas de Certificado</h4>
+        <button class="btn btn-danger btn-sm" (click)="nuevaPlantilla()">
+            <i class="fa-solid fa-plus me-1"></i> Nueva Plantilla
+        </button>
+    </div>
+
+    @if (error) { <div class="alert alert-danger py-2">{{ error }}</div> }
+    @if (success) { <div class="alert alert-success py-2">{{ success }}</div> }
+
+    <!-- FORM -->
+    @if (showForm) {
+    <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-header fw-semibold">{{ editando ? 'Editar Plantilla' : 'Nueva Plantilla' }}</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label class="form-label fw-semibold">Nombre <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="form.nombre" placeholder="Ej: Plantilla Diplomado 2026">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Tipo</label>
+                    <select class="form-select" [(ngModel)]="form.tipo">
+                        <option value="aprobacion">Aprobación</option>
+                        <option value="participacion">Participación</option>
+                        <option value="merito">Mérito</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-semibold">Imagen de fondo (JPG/PNG) <span class="text-danger">*</span></label>
+                    <input type="file" class="form-control" accept=".jpg,.jpeg,.png" (change)="subirImagen($event)">
+                    @if (subiendo) { <small class="text-muted"><span class="spinner-border spinner-border-sm me-1"></span>Subiendo...</small> }
+                    @if (form.imagen_url) {
+                        <div class="mt-2">
+                            <small class="text-success"><i class="fa-solid fa-check me-1"></i>Imagen cargada</small>
+                            <br>
+                            <img [src]="storageBase + form.imagen_url" class="mt-2 rounded border" style="max-height:120px;">
+                        </div>
+                    }
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Ancho (px)</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.ancho_px">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Alto (px)</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.alto_px">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Orientación</label>
+                    <select class="form-select" [(ngModel)]="form.orientacion">
+                        <option value="horizontal">Horizontal</option>
+                        <option value="vertical">Vertical</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">Calidad JPG (%)</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.calidad_jpg" min="50" max="100">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Color texto por defecto</label>
+                    <div class="d-flex gap-2 align-items-center">
+                        <input type="color" class="form-control form-control-color" [(ngModel)]="form.color_default">
+                        <input type="text" class="form-control" [(ngModel)]="form.color_default" style="width:100px;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Estado</label>
+                    <select class="form-select" [(ngModel)]="form.estado">
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-danger" (click)="guardar()" [disabled]="guardando || !form.nombre">
+                    @if (guardando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+                    Guardar
+                </button>
+                <button class="btn btn-outline-secondary" (click)="cancelar()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- TABLE -->
+    @if (loading) {
+        <div class="text-center py-5"><span class="spinner-border text-danger"></span></div>
+    } @else {
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Dimensiones</th>
+                        <th>Vista previa</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (p of plantillas; track p.id) {
+                    <tr>
+                        <td class="fw-semibold">{{ p.nombre }}</td>
+                        <td><span class="badge bg-secondary">{{ p.tipo }}</span></td>
+                        <td class="text-muted small">{{ p.ancho_px }} × {{ p.alto_px }}</td>
+                        <td>
+                            @if (p.imagen_url) {
+                                <img [src]="storageBase + p.imagen_url" style="height:40px; border-radius:4px;">
+                            }
+                        </td>
+                        <td>
+                            <span class="badge" [class.bg-success]="p.estado==='activo'" [class.bg-secondary]="p.estado!=='activo'">
+                                {{ p.estado }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-sm btn-outline-primary" (click)="editarPlantilla(p)" title="Editar">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <a class="btn btn-sm btn-outline-dark" [routerLink]="['/admin/plantillas', p.id, 'campos']" title="Configurar campos">
+                                    <i class="fa-solid fa-sliders"></i>
+                                </a>
+                                <button class="btn btn-sm btn-outline-danger" (click)="eliminar(p)" title="Eliminar">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr><td colspan="6" class="text-center text-muted py-4">No hay plantillas creadas.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+</div>

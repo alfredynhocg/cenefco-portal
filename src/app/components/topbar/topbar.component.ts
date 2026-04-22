@@ -22,38 +22,19 @@ export class TopbarComponent {
     @Input() isAlert?: boolean
 
 
-    homeMenuItems = [
-        { title: 'Home 01', image: 'assets/img/demo/demo-img1.png', multiPageLink: '/home-1', onePageLink: '/home-single-1' },
-        { title: 'Home 02', image: 'assets/img/demo/demo-img2.png', multiPageLink: '/home-2', onePageLink: '/home-single-2' },
-        { title: 'Home 03', image: 'assets/img/demo/demo-img3.png', multiPageLink: '/home-3', onePageLink: '/home-single-3' },
-        { title: 'Home 04', image: 'assets/img/demo/demo-img4.png', multiPageLink: '/home-4', onePageLink: '/home-single-4' },
+    programasMenuItems = [
+        { title: 'Todos los programas', link: '/cursos' },
+        { title: 'Cursos',              link: '/cursos' },
+        { title: 'Diplomados',          link: '/cursos' },
+        { title: 'Posgrados',           link: '/cursos' },
+        { title: 'Formación continua',  link: '/cursos' },
     ];
 
-    serviceMenuItems = [
-        { title: 'Service One', link: '/services/one' },
-        { title: 'Service Left', link: '/services/left' },
-        { title: 'Service Right', link: '/services/right' },
-        { title: 'Service Single', link: '/services/single' }
-    ]
-
-    blogMenuItems = [
-        { title: 'Blog One', link: '/blogs/one' },
-        { title: 'Blog Sidebar', link: '/blogs/sidebar' },
-        { title: 'Blog Left', link: '/blogs/left' },
-        { title: 'Blog Right', link: '/blogs/right' },
-        { title: 'Blog Single', link: '/blogs/single' }
-    ];
-
-    pageMenuItems = [
-        { title: 'Case Study One', link: '/case-study-1' },
-        { title: 'Case Study Left', link: '/case-study-left' },
-        { title: 'Case Study Right', link: '/case-study-right' },
-        { title: 'Case Study Single', link: '/case-study-single' },
-        { title: 'Our Team', link: '/our-team' },
-        { title: 'Pricing Plan', link: '/pricing-plan' },
-        { title: 'Testimonials', link: '/testimonials' },
-        { title: 'FAQ', link: '/faq' },
-        { title: '404', link: '/404' }
+    institucionalMenuItems = [
+        { title: 'Acreditación',      link: '/nosotros' },
+        { title: 'Docentes',          link: '/docentes' },
+        { title: 'Noticias',          link: '/noticias' },
+        { title: 'Preguntas frecuentes', link: '/faq' },
     ];
 
 

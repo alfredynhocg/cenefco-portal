@@ -1,0 +1,123 @@
+<div class="p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold mb-0">Lista de Aprobados</h4>
+        <button class="btn btn-danger btn-sm" (click)="nuevoAprobado()">
+            <i class="fa-solid fa-user-plus me-1"></i> Agregar Aprobado
+        </button>
+    </div>
+
+    @if (error) { <div class="alert alert-danger py-2">{{ error }}</div> }
+    @if (success) { <div class="alert alert-success py-2">{{ success }}</div> }
+
+    <!-- FILTROS -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body py-2">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold small mb-1">ID de Apertura (imparte_id)</label>
+                    <input type="number" class="form-control form-control-sm" [(ngModel)]="filtros.imparte_id" placeholder="Ej: 123">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-sm btn-outline-dark" (click)="buscar()">
+                        <i class="fa-solid fa-magnifying-glass me-1"></i> Filtrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    @if (showForm) {
+    <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-header fw-semibold">Nuevo Aprobado</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">ID Apertura (imparte_id) <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" [(ngModel)]="form.imparte_id" placeholder="Ej: 123">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">ID Usuario <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" [(ngModel)]="form.usuario_id" placeholder="Ej: 456">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Nota final</label>
+                    <input type="number" class="form-control" [(ngModel)]="form.nota_final" step="0.01" placeholder="Ej: 78.5">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Condición</label>
+                    <select class="form-select" [(ngModel)]="form.condicion">
+                        <option value="aprobado">Aprobado</option>
+                        <option value="participación">Participación</option>
+                    </select>
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label fw-semibold">Observación</label>
+                    <input type="text" class="form-control" [(ngModel)]="form.observacion">
+                </div>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-danger" (click)="guardar()" [disabled]="guardando || !form.imparte_id || !form.usuario_id">
+                    @if (guardando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+                    Guardar
+                </button>
+                <button class="btn btn-outline-secondary" (click)="cancelar()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- TABLE -->
+    @if (loading) {
+        <div class="text-center py-5"><span class="spinner-border text-danger"></span></div>
+    } @else {
+    <div class="card border-0 shadow-sm">
+        <div class="card-header text-muted small">{{ total }} registros en total</div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>imparte_id</th>
+                        <th>usuario_id</th>
+                        <th>Condición</th>
+                        <th>Nota</th>
+                        <th>Estado Certificado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of items; track item.id) {
+                    <tr>
+                        <td class="text-muted small">{{ item.id }}</td>
+                        <td>{{ item.imparte_id }}</td>
+                        <td>{{ item.usuario_id }}</td>
+                        <td>
+                            <span class="badge" [class.bg-success]="item.condicion==='aprobado'" [class.bg-info]="item.condicion!=='aprobado'">
+                                {{ item.condicion }}
+                            </span>
+                        </td>
+                        <td>{{ item.nota_final ?? '—' }}</td>
+                        <td>
+                            <span class="badge"
+                                [class.bg-warning]="item.estado_certificado==='pendiente'"
+                                [class.bg-success]="item.estado_certificado==='generado'"
+                                [class.bg-secondary]="item.estado_certificado!=='pendiente' && item.estado_certificado!=='generado'">
+                                {{ item.estado_certificado }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-danger" (click)="eliminar(item)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr><td colspan="7" class="text-center text-muted py-4">No hay registros.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+</div>

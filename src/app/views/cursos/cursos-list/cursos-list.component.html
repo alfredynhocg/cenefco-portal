@@ -1,0 +1,107 @@
+<div class="hero1-section-area about-bg-area">
+    <img src="assets/img/bg/header-img1.png" alt="" class="header-img1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 m-auto">
+                <div class="hero-heading-area heading1 text-center">
+                    <h1>Nuestros Programas</h1>
+                    <app-breadcrumb title="Programas" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="blog1-section-area sp2">
+    <div class="container">
+
+        <!-- Buscador -->
+        <div class="row mb-4">
+            <div class="col-lg-6 col-md-8 m-auto">
+                <form (ngSubmit)="buscar()" class="d-flex gap-2">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Buscar programa..."
+                        [(ngModel)]="query"
+                        name="query"
+                    >
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Estado carga -->
+        @if (loading) {
+            <div class="row">
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (error) {
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-danger">{{ error }}</div>
+                </div>
+            </div>
+        }
+
+        <!-- Listado de cursos -->
+        @if (!loading && !error) {
+            @if (cursos.length === 0) {
+                <div class="row">
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted">No se encontraron programas.</p>
+                    </div>
+                </div>
+            } @else {
+                <div class="row">
+                    @for (curso of cursos; track curso.id_programa) {
+                        <div class="col-lg-4 col-md-6">
+                            <div class="blog-auhtor-boxarea">
+                                <div class="img1">
+                                    <img [src]="getImagen(curso)" [alt]="curso.imagen_alt || curso.nombre_programa">
+                                </div>
+                                <div class="blog-position">
+                                    <a [routerLink]="['/cursos', curso.id_programa]" class="heading">{{ curso.nombre_programa }}</a>
+                                    <div class="blog-content-area">
+                                        <ul>
+                                            @if (curso.inicio_actividades) {
+                                                <li><a href="javascript:void(0)"><i class="fa-solid fa-calendar-days"></i> {{ curso.inicio_actividades | date:'dd/MM/yyyy' }}</a></li>
+                                            }
+                                            @if (curso.categoria_nombre) {
+                                                <li><a href="javascript:void(0)"><i class="fa-solid fa-tag"></i> {{ curso.categoria_nombre }}</a></li>
+                                            }
+                                        </ul>
+                                        <p class="curso-desc-clamp">{{ curso.descripcion }}</p>
+                                        <a [routerLink]="['/cursos', curso.id_programa]" class="learnmore">Ver detalle <i class="fa-solid fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+            <!-- Paginación -->
+            @if (totalPages > 1) {
+                <div class="row mt-4">
+                    <div class="col-12 d-flex justify-content-center align-items-center gap-3">
+                        <button class="btn btn-outline-primary" (click)="prevPage()" [disabled]="pageIndex <= 1">
+                            <i class="fa-solid fa-chevron-left"></i> Anterior
+                        </button>
+                        <span>Página {{ pageIndex }} de {{ totalPages }}</span>
+                        <button class="btn btn-outline-primary" (click)="nextPage()" [disabled]="pageIndex >= totalPages">
+                            Siguiente <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>

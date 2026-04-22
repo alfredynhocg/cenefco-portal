@@ -497,6 +497,49 @@
     }
 }
 
+// cursos detail hero //
+.hero1-section-area.about-bg-area.cursos-hero-area {
+    background: linear-gradient(135deg, #002647 0%, #003d6e 50%, #001630 100%);
+
+    .header-img1 { display: none; }
+
+    .cursos-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 20%, rgba(0,100,200,0.15) 0%, transparent 50%);
+        z-index: 0;
+    }
+
+    .cursos-hero-dots {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background-image:
+            radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+
+    .container { position: relative; z-index: 1; }
+
+    .cursos-hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 6px 16px;
+        border-radius: 20px;
+        margin-bottom: 16px;
+        backdrop-filter: blur(4px);
+        i { font-size: 14px; }
+    }
+}
+
 .aboutpage-inner {
     background: var(--ztc-bg-bg-1) !important;
     position: relative;

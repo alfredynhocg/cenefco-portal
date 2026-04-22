@@ -9,6 +9,11 @@ export const routes: Routes = [
     },
     {
         path: '',
+        loadChildren: () =>
+            import('./views/admin/admin.route').then((mod) => mod.ADMIN_ROUTES),
+    },
+    {
+        path: '',
         component: LayoutComponent,
         loadChildren: () =>
             import('./views/views.route').then((mod) => mod.VIEWS_ROUTES),
