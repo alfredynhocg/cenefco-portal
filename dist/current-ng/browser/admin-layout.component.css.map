@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["angular:styles/component:css;46a5c989d2ae76a410fd157382c7dad538b2833bff27b2ec73d4863e4f84553b;/home/alfredynho/projects/cenefco/cenefco-portal/src/app/views/admin/admin-layout/admin-layout.component.html"],
+  "sourcesContent": ["\n.active-link { background: rgba(255,255,255,.12) !important; font-weight: 600; }\n.nav-link:hover { background: rgba(255,255,255,.07); }\n"],
+  "mappings": ";AACA,CAAC;AAAc,cAAY,KAAK,GAAG,EAAC,GAAG,EAAC,GAAG,EAAC;AAAiB,eAAa;AAAK;AAC/E,CAAC,QAAQ;AAAS,cAAY,KAAK,GAAG,EAAC,GAAG,EAAC,GAAG,EAAC;AAAM;",
+  "names": []
+}

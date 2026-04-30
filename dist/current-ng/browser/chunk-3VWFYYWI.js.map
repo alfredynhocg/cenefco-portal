@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/pagination/pagination.component.ts", "src/app/components/pagination/pagination.component.html"],
+  "sourcesContent": ["import { Component } from '@angular/core';\nimport { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';\n\n@Component({\n    selector: 'app-pagination',\n    imports: [NgbPaginationModule],\n    templateUrl: './pagination.component.html',\n    styles: ``\n})\nexport class PaginationComponent {\n    page = 2\n}\n", "<div class=\"pagination-area\">\n    <div class=\"page\">\n        <ul class=\"pagination\">\n            <ngb-pagination [collectionSize]=\"30\" [(page)]=\"page\" aria-label=\"Default pagination\" />\n        </ul>\n    </div>\n</div>"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AASM,IAAO,sBAAP,MAAO,qBAAmB;EAC5B,OAAO;;qCADE,sBAAmB;EAAA;yEAAnB,sBAAmB,WAAA,CAAA,CAAA,gBAAA,CAAA,GAAA,OAAA,GAAA,MAAA,GAAA,QAAA,CAAA,CAAA,GAAA,iBAAA,GAAA,CAAA,GAAA,MAAA,GAAA,CAAA,GAAA,YAAA,GAAA,CAAA,cAAA,sBAAA,GAAA,cAAA,kBAAA,MAAA,CAAA,GAAA,UAAA,SAAA,6BAAA,IAAA,KAAA;AAAA,QAAA,KAAA,GAAA;ACThC,MAAA,yBAAA,GAAA,OAAA,CAAA,EAA6B,GAAA,OAAA,CAAA,EACP,GAAA,MAAA,CAAA,EACS,GAAA,kBAAA,CAAA;AACmB,MAAA,2BAAA,cAAA,SAAA,kEAAA,QAAA;AAAA,QAAA,6BAAA,IAAA,MAAA,MAAA,MAAA,IAAA,OAAA;AAAA,eAAA;MAAA,CAAA;AAAtC,MAAA,uBAAA,EAAwF,EACvF,EACH;;;AAFkB,MAAA,oBAAA,CAAA;AAAA,MAAA,qBAAA,kBAAA,EAAA;AAAsB,MAAA,2BAAA,QAAA,IAAA,IAAA;;oBDEpC,qBAAmB,aAAA,GAAA,eAAA,EAAA,CAAA;;;sEAIpB,qBAAmB,CAAA;UAN/B;uBACa,kBAAgB,SACjB,CAAC,mBAAmB,GAAC,UAAA,kOAAA,CAAA;;;;6EAIrB,qBAAmB,EAAA,WAAA,uBAAA,UAAA,yDAAA,YAAA,GAAA,CAAA;AAAA,GAAA;",
+  "names": []
+}

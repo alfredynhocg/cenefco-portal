@@ -27,6 +27,7 @@ export interface PreinscripcionPayload {
     detalle_docente?: string;
     mensaje?: string;
     origen?: string;
+    campos_extra?: Record<string, unknown>;
 }
 
 @Injectable({ providedIn: 'root' })

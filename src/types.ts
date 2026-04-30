@@ -51,6 +51,25 @@ export type TestimonialType = {
     rating?:number
 }
 
+export type TipoCampo =
+    | 'text' | 'email' | 'number' | 'date' | 'textarea'
+    | 'select' | 'boolean' | 'file_pdf' | 'file_image';
+
+export type CategoriaCampo = {
+    id:           number;
+    categoria_id: number;
+    nombre_campo: string;
+    etiqueta:     string;
+    tipo_campo:   TipoCampo;
+    requerido:    boolean;
+    paso:         number;
+    orden:        number;
+    activo:       boolean;
+    ayuda:        string | null;
+    opciones:     (string | Record<string, unknown>)[] | null;
+    validacion:   Record<string, unknown> | null;
+};
+
 export type CursoType = {
     id_programa: number;
     id_us_reg: number;
@@ -85,6 +104,7 @@ export type CursoType = {
     meta_descripcion: string | null;
     fecha_publicacion: string | null;
     fecha_reg: string | null;
+    categoria_campos?: CategoriaCampo[];
 }
 
 export type PricingPlanType = {

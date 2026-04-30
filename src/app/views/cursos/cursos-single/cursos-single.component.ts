@@ -53,8 +53,9 @@ export class CursosSingleComponent implements OnInit {
 
     abrirInscripcion(): void {
         const modal = this.modalService.open(PreinscripcionModalComponent, { size: 'lg', centered: true });
-        modal.componentInstance.programaId = this.curso!.id_programa;
+        modal.componentInstance.programaId     = this.curso!.id_programa;
         modal.componentInstance.programaNombre = this.curso!.nombre_programa;
+        modal.componentInstance.camposDinamicos = this.curso!.categoria_campos ?? [];
     }
 
     get imagen(): string {
